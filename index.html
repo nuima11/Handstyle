@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <style>
+        body{
+            display: flex;
+            height: 100vh;
+            justify-content: center;
+        }
+        .accordion {
+            text-align: center;
+            display: flex;
+            width: 500px; /* 设置整体宽度 */
+            flex-direction: column;
+        }
+
+        .accordion-item {
+            border: 1px solid #ccc;
+            margin-bottom: 10px;
+        }
+
+        .accordion-header {
+            background-color: #eee;
+            padding: 10px;
+            cursor: pointer;
+            height: 50px;/* 设置标题区的高度为 50 像素 */
+            
+        }
+
+        .accordion-content {
+            height: 100px;/* 设置内容区的高度为 100 像素 */ 
+            overflow: hidden;
+            transition: height 0.5s ease-out;
+        }
+
+        .accordion-item.active .accordion-content {
+            height: auto;
+            transition: height 0.5s ease-in;
+        }
+    </style>
+
+    <div class="accordion">
+        <div class="accordion-item">
+            <h2 class="accordion-header">第一个盒子</h2>
+            <div class="accordion-content">
+                <p>这是第一个盒子的内容。</p>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header">第二个盒子</h2>
+            <div class="accordion-content">
+                <p>这是第二个盒子的内容。</p>
+            </div>
+        </div>
+        <div class="accordion-item"> 
+            <h2 class="accordion-header">第三个盒子</h2>
+            <div class="accordion-content">
+                <p>这是第三个盒子的内容。</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const accordionItems = document.querySelectorAll('.accordion-item');
+        accordionItems.forEach((item, index) => {
+            const content = item.querySelector('.accordion-content');
+            const header = item.querySelector('.accordion-header');
+            const headerHeight = parseInt(getComputedStyle(header).height);
+            const contentHeight = parseInt(getComputedStyle(content).height);
+            
+            // 默认第一个盒子是撑开的
+            if (index === 0) {
+                item.classList.add('active');
+                content.style.height = contentHeight + 'px';
+            } else {
+                content.style.height = '0';
+            }
+
+            // 让第一个盒子不是默认撑开，把上面的if判断语句改为下面注释的判断语句即可。
+
+            // if (index === 0) {
+            //     content.style.height = '0';
+            // } else {
+            //     content.style.height = '0';
+            // }
+
+            header.style.height = headerHeight + 'px';
+            item.addEventListener('click', () => {
+                item.classList.toggle('active');
+                if (item.classList.contains('active')) {
+                    content.style.height = contentHeight + 'px';
+                } else {
+                    content.style.height = '0';
+                }
+            });
+            item.addEventListener('dblclick', () => {
+                item.classList.remove('active');
+                content.style.height = contentHeight + 'px';
+                setTimeout(() => {
+                    content.style.height = '0';
+                }, 500);
+            });
+        });
+    </script>
+</body>
+
+</html>
